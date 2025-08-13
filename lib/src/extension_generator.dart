@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:repo_annotation/repo_annotation.dart';
@@ -8,14 +8,14 @@ import 'model_visitor.dart';
 class ExtensionGenerator extends GeneratorForAnnotation<ExtensionAnnotation> {
   @override
   generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
+      covariant Element2 element, ConstantReader annotation, BuildStep buildStep) {
     return _generatedSource(element);
   }
 
-  String _generatedSource(Element element) {
+  String _generatedSource(Element2 element) {
     var visitor = ModelVisitor();
 
-    element.visitChildren(visitor);
+    element.visitChildren2(visitor);
 
     var classBuffer = StringBuffer();
 
