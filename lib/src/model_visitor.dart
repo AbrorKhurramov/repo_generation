@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/visitor2.dart';
+import 'package:analyzer/dart/element/visitor.dart';
 
-class ModelVisitor extends SimpleElementVisitor2<void> {
+class ModelVisitor extends SimpleElementVisitor<void> {
   String className = "RemoteDataSource";
 
   Map<String, dynamic> fields = {};
@@ -16,15 +16,15 @@ class ModelVisitor extends SimpleElementVisitor2<void> {
   @override
   void visitFieldElement(FieldElement element) {
     final elementType = element.type.toString();
-    fields[element.name!] = elementType.replaceFirst('*', '');
+    fields[element.name] = elementType.replaceFirst('*', '');
   }
 
   @override
   void visitMethodElement(MethodElement element) {
     Map<String, dynamic> params = {};
-    element.formalParameters.forEach((param) {
-      params[param.name!] = param.type.toString();
+    element.parameters.forEach((param) {
+      params[param.name] = param.type.toString();
     });
-    methods[element.name!] = {element.returnType.toString(): params};
+    methods[element.name] = {element.returnType.toString(): params};
   }
 }
