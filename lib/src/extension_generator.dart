@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:better_repo_annotation/repo_annotation.dart';
-import 'package:build/src/builder/build_step.dart';
+import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
 import 'model_visitor.dart';
@@ -29,7 +29,7 @@ class ExtensionGenerator extends GeneratorForAnnotation<ExtensionAnnotation> {
     // assign variables to Map
     for (var field in visitor.fields.keys) {
       var variable =
-      field.startsWith('_') ? field.replaceFirst('_', '') : field;
+          field.startsWith('_') ? field.replaceFirst('_', '') : field;
 
       classBuffer.writeln("'$variable': $field,");
     }
@@ -41,7 +41,7 @@ class ExtensionGenerator extends GeneratorForAnnotation<ExtensionAnnotation> {
     // getters and setters
     for (var field in visitor.fields.keys) {
       var variable =
-      field.startsWith('_') ? field.replaceFirst('_', '') : field;
+          field.startsWith('_') ? field.replaceFirst('_', '') : field;
 
       // extension *variable*Var
       classBuffer.writeln("extension ${variable}Var on ${visitor.className} {");

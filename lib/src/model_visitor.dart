@@ -1,30 +1,30 @@
-import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/visitor2.dart';
 
-class ModelVisitor extends SimpleElementVisitor {
+class ModelVisitor extends SimpleElementVisitor2<void> {
   String className = "RemoteDataSource";
 
   Map<String, dynamic> fields = {};
   Map<String, Map<dynamic, Map<String, dynamic>>> methods = {};
 
   @override
-  visitConstructorElement(ConstructorElement element) {
+  void visitConstructorElement(ConstructorElement element) {
     final elementReturnType = element.type.returnType.toString();
     className = elementReturnType.replaceFirst('*', '');
   }
 
   @override
-  visitFieldElement(FieldElement element) {
+  void visitFieldElement(FieldElement element) {
     final elementType = element.type.toString();
-    fields[element.name] = elementType.replaceFirst('*', '');
+    fields[element.name!] = elementType.replaceFirst('*', '');
   }
 
   @override
-  visitMethodElement(MethodElement element) {
+  void visitMethodElement(MethodElement element) {
     Map<String, dynamic> params = {};
-    element.parameters.forEach((param) {
-      params[param.name] = param.type.toString();
+    element.formalParameters.forEach((param) {
+      params[param.name!] = param.type.toString();
     });
-    methods[element.name] = {element.returnType.toString(): params};
+    methods[element.name!] = {element.returnType.toString(): params};
   }
 }
